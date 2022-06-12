@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "org.owasp.esapi.resources",
+  "type": "java.lang.String",
+  "description": "The place where esapi properties is. 'org.owasp.esapi.resources'"
+}]}
