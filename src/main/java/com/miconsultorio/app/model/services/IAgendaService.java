@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 
 public interface IAgendaService {
 	
-	public Flux<Cita> obtenerCitasPorFecha(Date fecha, String idUsuario);
+	public Flux<Cita> obtenerCitasPorFechaInicio(Date fecha, String idUsuario);
 	
 	public Mono<Cita> guardarCita(Cita cita);
 	

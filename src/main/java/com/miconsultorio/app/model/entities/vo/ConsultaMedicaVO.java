@@ -1,0 +1,135 @@
+package com.miconsultorio.app.model.entities.vo;
+import java.util.Date;
+import java.util.List;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.miconsultorio.app.model.entities.ConsultaMedica;
+import com.miconsultorio.app.model.entities.bo.Medicacion;
+
+
+public class ConsultaMedicaVO {
+	private String id;
+	@NotNull
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date fecha;
+	@NotBlank
+	private String paciente;
+	@NotBlank
+	private String doctor;
+	@NotNull
+	@Min(value = 0)
+	private Float peso;
+	@NotNull
+	@Min(value = 0)
+	private Float temperatura;
+	@NotNull
+	private String diagnostico;
+	@Valid
+	private List<Medicacion> medicacion;
+	private String observaciones;
+	
+	public ConsultaMedicaVO() {
+		super();
+	}
+	
+	public ConsultaMedica toEntity() {
+		ConsultaMedica cm = new ConsultaMedica();
+		cm.setId(this.id);
+		cm.setDiagnositco(this.diagnostico);
+		cm.setDoctor(this.doctor);
+		cm.setFecha(this.fecha);
+		cm.setMedicacion(this.medicacion);
+		cm.setObservaciones(this.observaciones);
+		cm.setPaciente(this.paciente);
+		cm.setPeso(this.peso);
+		cm.setTemperatura(this.temperatura);
+		return cm;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public String getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(String paciente) {
+		this.paciente = paciente;
+	}
+
+	public String getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(String doctor) {
+		this.doctor = doctor;
+	}
+
+	public Float getPeso() {
+		return peso;
+	}
+
+	public void setPeso(Float peso) {
+		this.peso = peso;
+	}
+
+	public Float getTemperatura() {
+		return temperatura;
+	}
+
+	public void setTemperatura(Float temperatura) {
+		this.temperatura = temperatura;
+	}
+
+	public String getDiagnostico() {
+		return diagnostico;
+	}
+
+	public void setDiagnostico(String diagnostico) {
+		this.diagnostico = diagnostico;
+	}
+
+	public List<Medicacion> getMedicacion() {
+		return medicacion;
+	}
+
+	public void setMedicacion(List<Medicacion> medicacion) {
+		this.medicacion = medicacion;
+	}
+
+	public String getObservaciones() {
+		return observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}
+
+	@Override
+	public String toString() {
+		return "ConsultaMedicaVO [id=" + id + ", fecha=" + fecha + ", paciente=" + paciente + ", doctor=" + doctor
+				+ ", peso=" + peso + ", temperatura=" + temperatura + ", diagnostico=" + diagnostico + ", medicacion="
+				+ medicacion + ", observaciones=" + observaciones + "]";
+	}
+	
+}
+

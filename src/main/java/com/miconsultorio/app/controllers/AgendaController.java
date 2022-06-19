@@ -21,7 +21,7 @@ public class AgendaController {
 	
 	@PostMapping("/porFecha")
 	public Flux<Cita> getAgendaByDate(@RequestBody RequestAgendaByDate req) {
-		return agendaService.obtenerCitasPorFecha(req.getFecha(), req.getIdUsuario());
+		return agendaService.obtenerCitasPorFechaInicio(req.getFecha(), req.getIdUsuario());
 	}
 	
 	@PostMapping("/cita")

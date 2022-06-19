@@ -23,7 +23,7 @@ public class AgendaServiceImpl implements IAgendaService {
 	}
 	
 	@Override
-	public Flux<Cita> obtenerCitasPorFecha(Date fecha, String idUsuario) {
-		return citaDao.findByFechaAndIdUsuario(fecha, idUsuario);
+	public Flux<Cita> obtenerCitasPorFechaInicio(Date fecha, String idUsuario) {
+		return citaDao.findByFechaInicioAndIdUsuario(fecha, idUsuario);
 	}
 }

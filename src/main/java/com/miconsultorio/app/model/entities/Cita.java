@@ -13,19 +13,14 @@ public class Cita {
 	private String paciente;
 	private String pacienteEmail;
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
-	private Date fecha;
-	private String hora;
+	private Date fechaInicio;
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
+	private Date fechaFin;
 	private String idUsuario;
 	private Float duracion;
 	
 	public Cita() {
-	}
-
-	public Cita(String paciente, String pacienteEmail, Date fecha) {
 		super();
-		this.paciente = paciente;
-		this.pacienteEmail = pacienteEmail;
-		this.fecha = fecha;
 	}
 
 	public String getId() {
@@ -52,20 +47,20 @@ public class Cita {
 		this.pacienteEmail = pacienteEmail;
 	}
 
-	public Date getFecha() {
-		return fecha;
+	public Date getFechaInicio() {
+		return fechaInicio;
 	}
 
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
 	}
 
-	public String getHora() {
-		return hora;
+	public Date getFechaFin() {
+		return fechaFin;
 	}
 
-	public void setHora(String hora) {
-		this.hora = hora;
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
 	}
 
 	public String getIdUsuario() {
@@ -86,8 +81,9 @@ public class Cita {
 
 	@Override
 	public String toString() {
-		return "Cita [id=" + id + ", paciente=" + paciente + ", pacienteEmail=" + pacienteEmail + ", fecha=" + fecha
-				+ ", hora=" + hora + ", idUsuario=" + idUsuario + ", duracion=" + duracion + "]";
+		return "Cita [id=" + id + ", paciente=" + paciente + ", pacienteEmail=" + pacienteEmail + ", fechaInicio="
+				+ fechaInicio + ", fechaFin=" + fechaFin + ", idUsuario=" + idUsuario + ", duracion=" + duracion + "]";
 	}
+	
 
 }

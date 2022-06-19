@@ -10,6 +10,6 @@ import reactor.core.publisher.Flux;
 
 public interface ICitaDao extends ReactiveMongoRepository<Cita, String> {
 	
-	public Flux<Cita> findByFechaAndIdUsuario(Date fecha, String idUsuario);
+	public Flux<Cita> findByFechaInicioAndIdUsuario(Date fecha, String idUsuario);
 	
 }
