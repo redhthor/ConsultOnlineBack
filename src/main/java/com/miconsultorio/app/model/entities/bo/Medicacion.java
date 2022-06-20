@@ -2,14 +2,17 @@ package com.miconsultorio.app.model.entities.bo;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class Medicacion {
 	@NotBlank
 	private String medicamento;
 	@Min(value = 0)
+	@NotNull
 	private Integer cantidad;
 	private String unidadMedida;
 	@Min(value = 0)
+	@NotNull
 	private Integer frecuencia;
 	private String periodoTiempo;
 	
