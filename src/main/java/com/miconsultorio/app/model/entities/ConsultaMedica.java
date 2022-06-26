@@ -18,6 +18,7 @@ public class ConsultaMedica {
 	private Paciente paciente;
 	private String doctor;
 	private Float peso;
+	private Float estatura;
 	private Float temperatura;
 	private String diagnostico;
 	private List<Medicacion> medicacion;
@@ -107,13 +108,21 @@ public class ConsultaMedica {
 	public void setDiagnostico(String diagnostico) {
 		this.diagnostico = diagnostico;
 	}
-	
+
 	public List<String> getSintomas() {
 		return sintomas;
 	}
 
 	public void setSintomas(List<String> sintomas) {
 		this.sintomas = sintomas;
+	}
+
+	public Float getEstatura() {
+		return estatura;
+	}
+
+	public void setEstatura(Float estatura) {
+		this.estatura = estatura;
 	}
 
 	@Override

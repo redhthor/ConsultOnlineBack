@@ -1,10 +1,12 @@
 package com.miconsultorio.app.model.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.miconsultorio.app.model.dao.IConsultaMedicaDao;
 import com.miconsultorio.app.model.entities.ConsultaMedica;
 import com.miconsultorio.app.model.services.IConsultasService;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 
@@ -25,6 +27,16 @@ public class ConsultaServiceImpl implements IConsultasService {
 			return;
 		}
 		consultaDao.delete(cm);
+	}
+	
+	@Override
+	public Mono<ConsultaMedica> buscarConsulta(String id) {
+		return consultaDao.buscarPorId(id);
+	}
+	
+	@Override
+	public Flux<ConsultaMedica> listarConsultarPorPaciente(String email) {
+		return consultaDao.findByPacienteEmail(email);
 	}
 
 }

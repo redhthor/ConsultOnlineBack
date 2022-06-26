@@ -37,6 +37,13 @@ public class Usuario {
 		this.roles = roles;
 	}
 
+	public String fullName() {
+		String fullName = "";
+		fullName = this.nombre + " " + this.apellidoPaterno;
+		fullName = this.apellidoMaterno != null && !this.apellidoMaterno.isBlank() ? fullName + " " + this.apellidoMaterno : fullName; 
+		return fullName;
+	}
+	
 	public String getId() {
 		return id;
 	}

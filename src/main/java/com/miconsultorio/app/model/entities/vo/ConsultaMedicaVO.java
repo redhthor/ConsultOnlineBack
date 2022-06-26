@@ -1,4 +1,5 @@
 package com.miconsultorio.app.model.entities.vo;
+
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.miconsultorio.app.model.entities.ConsultaMedica;
 import com.miconsultorio.app.model.entities.bo.Medicacion;
 
-
 public class ConsultaMedicaVO {
 	private String id;
 	@NotNull
@@ -23,10 +23,13 @@ public class ConsultaMedicaVO {
 	@NotBlank
 	private String doctor;
 	@NotNull
-	@Min(value = 0)
+	@Min(value = 1)
 	private Float peso;
 	@NotNull
-	@Min(value = 0)
+	@Min(value = 1)
+	private Float estatura;
+	@NotNull
+	@Min(value = 20)
 	private Float temperatura;
 	@NotNull
 	private String diagnostico;
@@ -34,11 +37,11 @@ public class ConsultaMedicaVO {
 	private List<Medicacion> medicacion;
 	private List<String> sintomas;
 	private String observaciones;
-	
+
 	public ConsultaMedicaVO() {
 		super();
 	}
-	
+
 	public ConsultaMedica toEntity() {
 		ConsultaMedica cm = new ConsultaMedica();
 		cm.setId(this.id);
@@ -134,12 +137,19 @@ public class ConsultaMedicaVO {
 		this.sintomas = sintomas;
 	}
 
+	public Float getEstatura() {
+		return estatura;
+	}
+
+	public void setEstatura(Float estatura) {
+		this.estatura = estatura;
+	}
+
 	@Override
 	public String toString() {
 		return "ConsultaMedicaVO [id=" + id + ", fecha=" + fecha + ", paciente=" + paciente + ", doctor=" + doctor
 				+ ", peso=" + peso + ", temperatura=" + temperatura + ", diagnostico=" + diagnostico + ", medicacion="
 				+ medicacion + ", observaciones=" + observaciones + "]";
 	}
-	
-}
 
+}
