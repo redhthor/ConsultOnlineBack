@@ -22,6 +22,7 @@ public class ConsultaMedica {
 	private String diagnostico;
 	private List<Medicacion> medicacion;
 	private String observaciones;
+	private List<String> sintomas;
 
 	public ConsultaMedica() {
 		super();
@@ -105,6 +106,14 @@ public class ConsultaMedica {
 
 	public void setDiagnostico(String diagnostico) {
 		this.diagnostico = diagnostico;
+	}
+	
+	public List<String> getSintomas() {
+		return sintomas;
+	}
+
+	public void setSintomas(List<String> sintomas) {
+		this.sintomas = sintomas;
 	}
 
 	@Override

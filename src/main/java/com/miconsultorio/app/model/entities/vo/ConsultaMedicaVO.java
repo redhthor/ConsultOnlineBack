@@ -32,6 +32,7 @@ public class ConsultaMedicaVO {
 	private String diagnostico;
 	@Valid
 	private List<Medicacion> medicacion;
+	private List<String> sintomas;
 	private String observaciones;
 	
 	public ConsultaMedicaVO() {
@@ -49,6 +50,7 @@ public class ConsultaMedicaVO {
 		cm.setPaciente(this.paciente.toEntity());
 		cm.setPeso(this.peso);
 		cm.setTemperatura(this.temperatura);
+		cm.setSintomas(sintomas);
 		return cm;
 	}
 
@@ -122,6 +124,14 @@ public class ConsultaMedicaVO {
 
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
+	}
+
+	public List<String> getSintomas() {
+		return sintomas;
+	}
+
+	public void setSintomas(List<String> sintomas) {
+		this.sintomas = sintomas;
 	}
 
 	@Override
