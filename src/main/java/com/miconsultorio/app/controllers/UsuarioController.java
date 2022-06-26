@@ -4,9 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.miconsultorio.app.model.entities.Usuario;
 import com.miconsultorio.app.model.entities.vo.UsuarioVO;
 import com.miconsultorio.app.model.services.IUsuarioService;
-
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

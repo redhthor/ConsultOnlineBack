@@ -15,7 +15,7 @@ public class ConsultaMedica {
 	private String id;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
 	private Date fecha;
-	private String paciente;
+	private Paciente paciente;
 	private String doctor;
 	private Float peso;
 	private Float temperatura;
@@ -43,11 +43,11 @@ public class ConsultaMedica {
 		this.fecha = fecha;
 	}
 
-	public String getPaciente() {
+	public Paciente getPaciente() {
 		return paciente;
 	}
 
-	public void setPaciente(String paciente) {
+	public void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
 	}
 

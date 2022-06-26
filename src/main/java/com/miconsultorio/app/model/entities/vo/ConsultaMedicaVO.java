@@ -18,8 +18,8 @@ public class ConsultaMedicaVO {
 	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date fecha;
-	@NotBlank
-	private String paciente;
+	@Valid
+	private PacienteVO paciente;
 	@NotBlank
 	private String doctor;
 	@NotNull
@@ -46,7 +46,7 @@ public class ConsultaMedicaVO {
 		cm.setFecha(this.fecha);
 		cm.setMedicacion(this.medicacion);
 		cm.setObservaciones(this.observaciones);
-		cm.setPaciente(this.paciente);
+		cm.setPaciente(this.paciente.toEntity());
 		cm.setPeso(this.peso);
 		cm.setTemperatura(this.temperatura);
 		return cm;
@@ -68,11 +68,11 @@ public class ConsultaMedicaVO {
 		this.fecha = fecha;
 	}
 
-	public String getPaciente() {
+	public PacienteVO getPaciente() {
 		return paciente;
 	}
 
-	public void setPaciente(String paciente) {
+	public void setPaciente(PacienteVO paciente) {
 		this.paciente = paciente;
 	}
 
