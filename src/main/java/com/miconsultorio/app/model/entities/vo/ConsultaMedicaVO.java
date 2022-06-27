@@ -53,6 +53,7 @@ public class ConsultaMedicaVO {
 		cm.setPaciente(this.paciente.toEntity());
 		cm.setPeso(this.peso);
 		cm.setTemperatura(this.temperatura);
+		cm.setEstatura(estatura);
 		cm.setSintomas(sintomas);
 		return cm;
 	}

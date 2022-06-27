@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.miconsultorio.app.model.entities.ConsultaMedica;
 import com.miconsultorio.app.model.entities.Paciente;
 import com.miconsultorio.app.model.entities.vo.ConsultaMedicaVO;
 import com.miconsultorio.app.model.entities.vo.PacienteVO;
@@ -68,6 +70,28 @@ public class ConsultorioController {
 		resp.put("consulta", consultaService.guardarConsulta(consulta.toEntity()).block());
 		return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
+	
+	@PostMapping("/consulta")
+	public ResponseEntity<?> buscarConsulta(@RequestBody String id) {
+		logger.info("Buscando consulta con id: {}",id);
+		Map<String, Object> resp = new LinkedHashMap<>();
+		if(id == null || id.isBlank()) {
+			resp.put("error", "El id de la consulta solicitada no es válido");
+			return new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
+		}
+		ConsultaMedica consulta = null;
+		try {
+			consulta = consultaService.buscarConsulta(id).block();
+		} catch(IllegalArgumentException il) {
+			logger.error("Excepcion de argumento ilegal: {}", il.getMessage());
+		}
+		if(consulta == null) {
+			resp.put("mensaje","No se encontró una consulta con el id "+id);
+			return new ResponseEntity<>(resp, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(consulta, HttpStatus.OK);
+	}
+
 	
 	@PostMapping("buscarPaciente")
 	public Mono<Paciente> findPaciente(@RequestBody String email) {

@@ -12,7 +12,7 @@ public interface IConsultaMedicaDao extends ReactiveMongoRepository<ConsultaMedi
 
 	public Flux<ConsultaMedica> findByPacienteEmail(String email);
 	
-	@Query("{'_id': ObjectId(?0)}")
+	@Query("{'id': ObjectId(?0)}")
 	public Mono<ConsultaMedica> buscarPorId(String id);
 	
 }
