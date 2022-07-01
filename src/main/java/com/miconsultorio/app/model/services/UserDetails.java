@@ -32,7 +32,7 @@ public class UserDetails implements UserDetailsService {
 			logger.error("El usuario {} no existe", username);
 			throw new UsernameNotFoundException("Usuario o contraseña no válidos, favor de verificar los datos");
 		}
-		List<GrantedAuthority> authorities = user.getRoles().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+		List<GrantedAuthority> authorities = user.getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_"+role) ).collect(Collectors.toList());
 		return new User(user.getCorreo(), user.getPassword(), true, true, true, true, authorities);
 	}
 	

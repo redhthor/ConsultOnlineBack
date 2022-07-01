@@ -7,18 +7,24 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Document
 public class Usuario {
 	@Id
 	private String id;
+	private String titulo;
+	private String cedula;
 	private String nombre;
 	private String apellidoPaterno;
 	private String apellidoMaterno;
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date fechaNacimiento;
 	private String correo;
+	@JsonIgnore
 	private String password;
 	private Integer status;
+	@JsonIgnore
 	private List<String> roles;
 
 	public Usuario() {
@@ -38,8 +44,8 @@ public class Usuario {
 	}
 
 	public String fullName() {
-		String fullName = "";
-		fullName = this.nombre + " " + this.apellidoPaterno;
+		String fullName = titulo != null && !titulo.isBlank() ? titulo : "";
+		fullName = fullName + this.nombre + " " + this.apellidoPaterno;
 		fullName = this.apellidoMaterno != null && !this.apellidoMaterno.isBlank() ? fullName + " " + this.apellidoMaterno : fullName; 
 		return fullName;
 	}
@@ -115,5 +121,20 @@ public class Usuario {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public String getCedula() {
+		return cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
 }

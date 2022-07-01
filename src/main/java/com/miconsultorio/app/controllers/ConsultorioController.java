@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,7 +36,8 @@ public class ConsultorioController {
 	private PacienteServiceImpl pacienteService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(ConsultorioController.class);
-		
+	
+	@Secured("ROLE_USER")
 	@PostMapping("guardarConsulta")
 	public ResponseEntity<Map<String, Object>> guardarConsulta(@RequestBody @Valid ConsultaMedicaVO consulta, BindingResult result) {
 		Map<String, Object> resp = new LinkedHashMap<>();
@@ -71,6 +73,7 @@ public class ConsultorioController {
 		return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
 	
+	@Secured("ROLE_USER")
 	@PostMapping("/consulta")
 	public ResponseEntity<?> buscarConsulta(@RequestBody String id) {
 		logger.info("Buscando consulta con id: {}",id);
@@ -92,7 +95,7 @@ public class ConsultorioController {
 		return new ResponseEntity<>(consulta, HttpStatus.OK);
 	}
 
-	
+	@Secured("ROLE_USER")
 	@PostMapping("buscarPaciente")
 	public Mono<Paciente> findPaciente(@RequestBody String email) {
 		logger.info("Buscando paciente {}",email);

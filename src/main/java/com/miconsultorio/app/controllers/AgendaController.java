@@ -1,6 +1,7 @@
 package com.miconsultorio.app.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +20,13 @@ public class AgendaController {
 	@Autowired
 	private IAgendaService agendaService;
 	
+	@Secured("ROLE_USER")
 	@PostMapping("/porFecha")
 	public Flux<Cita> getAgendaByDate(@RequestBody RequestAgendaByDate req) {
 		return agendaService.obtenerCitasPorFechaInicio(req.getFecha(), req.getIdUsuario());
 	}
 	
+	@Secured("ROLE_USER")
 	@PostMapping("/cita")
 	public Mono<Cita> guardarCita(@RequestBody Cita cita) {
 		return agendaService.guardarCita(cita);

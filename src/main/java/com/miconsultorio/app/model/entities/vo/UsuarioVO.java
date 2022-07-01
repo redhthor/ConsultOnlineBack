@@ -16,6 +16,8 @@ public class UsuarioVO implements Serializable {
 	private String id;
 	@NotBlank(message = "El nombre es obligatorio")
 	private String nombre;
+	private String titulo;
+	private String cedula;
 	@NotBlank(message = "El apellido paterno es obligatorio")
 	private String apellidoPaterno;
 	private String apellidoMaterno;
@@ -38,6 +40,8 @@ public class UsuarioVO implements Serializable {
 		Usuario u = new Usuario();
 		u.setId(this.id);
 		u.setNombre(this.nombre);
+		u.setTitulo(titulo);
+		u.setCedula(cedula);
 		u.setApellidoPaterno(this.apellidoPaterno);
 		u.setApellidoMaterno(this.apellidoMaterno);
 		u.setFechaNacimiento(this.fechaNacimiento);
@@ -118,6 +122,22 @@ public class UsuarioVO implements Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public String getCedula() {
+		return cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
 	}
 
 	private static final long serialVersionUID = 818123L;
