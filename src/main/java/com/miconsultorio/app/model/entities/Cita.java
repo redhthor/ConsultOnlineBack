@@ -17,6 +17,7 @@ public class Cita {
 	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	private Date fechaFin;
 	private String doctor;
+	private String comentarios;
 	
 	public Cita() {
 		super();
@@ -68,6 +69,14 @@ public class Cita {
 
 	public void setDoctor(String doctor) {
 		this.doctor = doctor;
+	}
+
+	public String getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(String comentarios) {
+		this.comentarios = comentarios;
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import reactor.core.publisher.Flux;
 
 public interface ICitaDao extends ReactiveMongoRepository<Cita, String> {
 	
-	@Query("{'fechaInicio':{ $gt: ?0, $lt: ?1}, 'doctor': ?2}")
+	@Query(value = "{'fechaInicio':{ $gte: ?0, $lte: ?1}, 'doctor': ?2}", sort = "{'fechaInicio': 1}")
 	public Flux<Cita> buscarPorFechaInicioAndDoctor(Date fecha, Date fechaEnd, String doctor);
 	
 }

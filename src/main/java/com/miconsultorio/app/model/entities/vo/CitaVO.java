@@ -25,6 +25,7 @@ public class CitaVO {
 	private Date fechaFin;
 	@NotBlank(message = "Es necesario el usuario que crea el evento")
 	private String doctor;
+	private String comentarios;
 	
 	public CitaVO() {
 		super();
@@ -38,6 +39,7 @@ public class CitaVO {
 		c.setFechaInicio(fechaInicio);
 		c.setNombre(nombre);
 		c.setPaciente(paciente);
+		c.setComentarios(comentarios);
 		return c;
 	}
 	
@@ -87,6 +89,14 @@ public class CitaVO {
 
 	public void setDoctor(String doctor) {
 		this.doctor = doctor;
+	}
+
+	public String getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(String comentarios) {
+		this.comentarios = comentarios;
 	}
 
 	@Override
