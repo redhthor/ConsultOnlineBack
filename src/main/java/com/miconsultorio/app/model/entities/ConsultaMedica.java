@@ -61,11 +61,11 @@ public class ConsultaMedica {
 		this.doctor = doctor;
 	}
 
-	public String getDiagnositco() {
+	public String getDiagnostico() {
 		return diagnostico;
 	}
 
-	public void setDiagnositco(String diagnositco) {
+	public void setDiagnostico(String diagnositco) {
 		this.diagnostico = diagnositco;
 	}
 
@@ -99,14 +99,6 @@ public class ConsultaMedica {
 
 	public void setTemperatura(Float temperatura) {
 		this.temperatura = temperatura;
-	}
-
-	public String getDiagnostico() {
-		return diagnostico;
-	}
-
-	public void setDiagnostico(String diagnostico) {
-		this.diagnostico = diagnostico;
 	}
 
 	public List<String> getSintomas() {

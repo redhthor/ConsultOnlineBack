@@ -1,7 +1,7 @@
 package com.miconsultorio.app.model.entities.vo;
 
 import java.util.Date;
-
+import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -23,11 +23,12 @@ public class PacienteVO {
 	private String sexo;
 	@NotNull
 	private Date fechaNacimiento;
+	private List<String> alergias;
 
 	public PacienteVO() {
 		super();
 	}
-	
+
 	public static PacienteVO fromEntity(Paciente entity) {
 		PacienteVO p = new PacienteVO();
 		p.setId(entity.getId());
@@ -37,6 +38,7 @@ public class PacienteVO {
 		p.setApellido2(entity.getApellido2());
 		p.setSexo(entity.getSexo());
 		p.setFechaNacimiento(entity.getFechaNacimiento());
+		p.setAlergias(entity.getAlergias());
 		return p;
 	}
 
@@ -49,6 +51,7 @@ public class PacienteVO {
 		p.setApellido2(apellido2);
 		p.setSexo(sexo);
 		p.setFechaNacimiento(fechaNacimiento);
+		p.setAlergias(alergias);
 		return p;
 	}
 
@@ -106,6 +109,14 @@ public class PacienteVO {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<String> getAlergias() {
+		return alergias;
+	}
+
+	public void setAlergias(List<String> alergias) {
+		this.alergias = alergias;
 	}
 
 	@Override

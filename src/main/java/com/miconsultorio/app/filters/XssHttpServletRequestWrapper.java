@@ -19,7 +19,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	public String[] getParameterValues(String parameter) {
 		String[] values = super.getParameterValues(parameter);
 		if (values == null) {
-			return null;
+			return new String[0];
 		}
 		int count = values.length;
 		String[] encodedValues = new String[count];
@@ -44,6 +44,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
 	}
 
+	@Override
 	public String getHeader(String name) {
 
 		String value = super.getHeader(name);
@@ -56,33 +57,13 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
 	}
 
-//private String cleanXSS(String value) {
-//
-////You'll need to remove the spaces from the html entities below
-//
-//value = value.replaceAll("<", "& lt;").replaceAll(">", "& gt;");
-//
-//value = value.replaceAll("\\(", "& #40;").replaceAll("\\)", "& #41;");
-//
-//value = value.replaceAll("'", "& #39;");
-//
-//value = value.replaceAll("eval\\((.*)\\)", "");
-//
-//value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"") ;
-//
-//value = value.replaceAll("script", "");
-//
-//return value;
-//
-//}
-
 	private String cleanXSS(String value) {
 		if (value != null) {
 			// It is recommended to use ESAPI library to avoid script attacks
 			value = ESAPI.encoder().canonicalize(value);
 
 			// Avoid empty strings
-			value = value.replaceAll("", "");
+			value = value.replace("", "");
 
 			// Avoid script tags
 			Pattern scriptPattern = Pattern.compile("<script>(.*?)</script>", Pattern.CASE_INSENSITIVE);

@@ -1,6 +1,8 @@
 package com.miconsultorio.app.model.entities;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,6 +17,7 @@ public class Paciente {
 	private String apellido2;
 	private String sexo;
 	private Date fechaNacimiento;
+	private List<String> alergias = new LinkedList<>();
 
 	public Paciente() {
 		super();
@@ -23,10 +26,10 @@ public class Paciente {
 	public String getFullName() {
 		String fullName = "";
 		fullName = this.nombre + " " + this.apellido1;
-		fullName = this.apellido2 != null && !this.apellido2.isBlank() ? fullName + " " + this.apellido2 : fullName; 
+		fullName = this.apellido2 != null && !this.apellido2.isBlank() ? fullName + " " + this.apellido2 : fullName;
 		return fullName;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
@@ -81,6 +84,14 @@ public class Paciente {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<String> getAlergias() {
+		return alergias;
+	}
+
+	public void setAlergias(List<String> alergias) {
+		this.alergias = alergias;
 	}
 
 	@Override

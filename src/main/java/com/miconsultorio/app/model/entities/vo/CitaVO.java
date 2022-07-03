@@ -1,27 +1,46 @@
-package com.miconsultorio.app.model.entities;
+package com.miconsultorio.app.model.entities.vo;
 
 import java.util.Date;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Document
-public class Cita {
-	@Id
+import com.miconsultorio.app.model.entities.Cita;
+import com.miconsultorio.app.model.entities.Paciente;
+
+public class CitaVO {
 	private String id;
+	@NotBlank
+	@Size(min = 1, max = 50)
 	private String nombre;
 	private Paciente paciente;
 	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+	@NotNull(message = "Es un valor requerido")
 	private Date fechaInicio;
 	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+	@NotNull(message = "Es un valor requerido")
 	private Date fechaFin;
+	@NotBlank(message = "Es necesario el usuario que crea el evento")
 	private String doctor;
 	
-	public Cita() {
+	public CitaVO() {
 		super();
 	}
 
+	public Cita toEntity() {
+		Cita c = new Cita();
+		c.setId(id);
+		c.setDoctor(doctor);
+		c.setFechaFin(fechaFin);
+		c.setFechaInicio(fechaInicio);
+		c.setNombre(nombre);
+		c.setPaciente(paciente);
+		return c;
+	}
+	
 	public String getId() {
 		return id;
 	}

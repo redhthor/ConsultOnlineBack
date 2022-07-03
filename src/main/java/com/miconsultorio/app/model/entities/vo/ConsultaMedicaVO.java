@@ -45,7 +45,7 @@ public class ConsultaMedicaVO {
 	public ConsultaMedica toEntity() {
 		ConsultaMedica cm = new ConsultaMedica();
 		cm.setId(this.id);
-		cm.setDiagnositco(this.diagnostico);
+		cm.setDiagnostico(this.diagnostico);
 		cm.setDoctor(this.doctor);
 		cm.setFecha(this.fecha);
 		cm.setMedicacion(this.medicacion);

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.miconsultorio.app.model.entities.Usuario;
+import com.miconsultorio.app.model.entities.vo.PasswordUpdateVO;
 import com.miconsultorio.app.model.entities.vo.UsuarioVO;
 import com.miconsultorio.app.model.services.IUsuarioService;
 
@@ -41,6 +42,7 @@ public class UsuarioController {
 	private PasswordEncoder encoder;
 	
 	private Logger logger = LoggerFactory.getLogger(UsuarioController.class);
+	private static final String ERROR = "error";
 	
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/usuarios")
@@ -53,17 +55,17 @@ public class UsuarioController {
 		Map<String, Object> response = new LinkedHashMap<>();
 		if(result.hasErrors()) {
 			List<String> errors =  new LinkedList<>();
-			result.getFieldErrors().forEach(obj -> {
-				errors.add(obj.getDefaultMessage());
-			});
-			response.put("error", "Solicitud no valida");
+			result.getFieldErrors().forEach(obj -> 
+				errors.add(obj.getDefaultMessage())
+			);
+			response.put(ERROR, "Solicitud no valida");
 			response.put("errors", errors);
 			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 		}
 		if(usuario.getId() == null || usuario.getId().isBlank()) {
 			Usuario find = service.findByCorreo(usuario.getCorreo()).block();
 			if(find != null) {
-				response.put("error", "Ya existe un usuario con el correo " + usuario.getCorreo() + " registrado");
+				response.put(ERROR, "Ya existe un usuario con el correo " + usuario.getCorreo() + " registrado");
 				return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 			}
 		}
@@ -84,7 +86,7 @@ public class UsuarioController {
 		if(!context.getAuthentication().isAuthenticated() || !userLogged.equals(usuario.getCorreo())) {
 			logger.info("Acceso denegado 1 {}",context.getAuthentication().isAuthenticated());
 			logger.info("Acceso denegado 1 {}, {}",userLogged, usuario.getCorreo());
-			response.put("error", accessDenied);
+			response.put(ERROR, accessDenied);
 			return new ResponseEntity<>(response,HttpStatus.FORBIDDEN);
 		}		
 		if(usuario.getId() == null || usuario.getId().isBlank() 
@@ -93,13 +95,13 @@ public class UsuarioController {
 				|| usuario.getApellidoPaterno().isBlank()) {
 			logger.info("Acceso denegado 2, {}", usuario);
 			logger.info("Solicitud de actualización de usuario no válida {}", usuario.getId());
-			response.put("error", "Solicitud no válida");
+			response.put(ERROR, "Solicitud no válida");
 			response.put("mensaje", "Información no válida");
 			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 		}
 		Usuario u = service.findByCorreo(userLogged).block();
 		if(u == null) {
-			response.put("error",  accessDenied);
+			response.put(ERROR,  accessDenied);
 			return new ResponseEntity<>(response,HttpStatus.FORBIDDEN);
 		}
 		u.setNombre(usuario.getNombre());
@@ -116,16 +118,36 @@ public class UsuarioController {
 	
 	@Secured("ROLE_USER")
 	@GetMapping("/getUserData")
-	public ResponseEntity<?> getUserLoggedData() {
+	public ResponseEntity<Object> getUserLoggedData() {
 		Map<String, Object> resp = new HashMap<>();
 		SecurityContext context = SecurityContextHolder.getContext();
 		if(!context.getAuthentication().isAuthenticated()) {
-			 resp.put("error", "Acceso denegado");
-			 return new ResponseEntity<>(resp, HttpStatus.FORBIDDEN);
+			resp.put(ERROR, "Acceso denegado");
+			return new ResponseEntity<>(resp, HttpStatus.FORBIDDEN);
 		}
 		return new ResponseEntity<>(service.findByCorreo(context.getAuthentication().getName()).block(),HttpStatus.OK);
 	}
 	
-//	public ResponseEntity<Map<String, Object>> updatePassword(@RequestBody)
+	@Secured("ROLE_USER")
+	@PostMapping("/usuario/passwordUpdate")
+	public ResponseEntity<Map<String, Object>> updatePassword(@RequestBody PasswordUpdateVO datos) {
+		Map<String, Object> resp = new LinkedHashMap<>();
+		SecurityContext context = SecurityContextHolder.getContext();
+		if(!context.getAuthentication().isAuthenticated() || !context.getAuthentication().getName().equals(datos.getUser())) {
+			resp.put(ERROR, "Acceso denegado, no puedes actualizar la contraseña");
+			resp.put("mensaje", "No tienes permiso para actualizar la contraseña");
+			return new ResponseEntity<>(resp,HttpStatus.FORBIDDEN);
+		}
+		Usuario user = this.service.findByCorreo(datos.getUser()).block();
+		if(user == null) {
+			resp.put(ERROR, "No fue posible actualizar la contraseña");
+			resp.put("mensaje", "No se encontró el usuario solicitado");
+			return new ResponseEntity<>(resp,HttpStatus.FORBIDDEN);
+		}
+		user.setPassword(encoder.encode(datos.getPassword()));
+		user = service.save(user).block();
+		resp.put("mensaje", "Se actualizó correctamente la contraseña");
+		return new ResponseEntity<>(resp,HttpStatus.OK);
+	}
 	
 }

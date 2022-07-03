@@ -43,9 +43,9 @@ public class ConsultorioController {
 		Map<String, Object> resp = new LinkedHashMap<>();
 		if(result.hasErrors()) {
 			List<String> errors = new LinkedList<>();
-			result.getFieldErrors().forEach( err -> {
-				errors.add("El campo " + err.getField() + " " + err.getDefaultMessage());
-			});
+			result.getFieldErrors().forEach(
+					err -> errors.add("El campo " + err.getField() + " " + err.getDefaultMessage())
+			);
 			resp.put("errors", errors);
 			resp.put("error", "Solicitud no válida");
 			return new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
@@ -67,6 +67,13 @@ public class ConsultorioController {
 				consulta.setPaciente(PacienteVO.fromEntity(p));
 			}
 		} else if(consulta.getPaciente() != null && consulta.getId() != null && !consulta.getId().isBlank()) {
+			// Updating allergies
+			Paciente p = this.pacienteService.buscarPacientePorEmail(consulta.getPaciente().getEmail()).block();
+			if(p != null) {
+				logger.info("Actualizando alergias {}",consulta.getPaciente().getAlergias());
+				p.setAlergias(consulta.getPaciente().getAlergias());
+				this.pacienteService.guardarPaciente(p).subscribe();
+			}
 			logger.info("El paciente ya se había guardado anteriormente en la base de datos");
 		}
 		resp.put("consulta", consultaService.guardarConsulta(consulta.toEntity()).block());
@@ -75,7 +82,7 @@ public class ConsultorioController {
 	
 	@Secured("ROLE_USER")
 	@PostMapping("/consulta")
-	public ResponseEntity<?> buscarConsulta(@RequestBody String id) {
+	public ResponseEntity<Object> buscarConsulta(@RequestBody String id) {
 		logger.info("Buscando consulta con id: {}",id);
 		Map<String, Object> resp = new LinkedHashMap<>();
 		if(id == null || id.isBlank()) {

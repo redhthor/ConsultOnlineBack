@@ -87,7 +87,7 @@ public class PdfExporterImpl implements IPdfExporter {
 			document.add(table);
 			p = new Paragraph("Diagnóstico: ", fontBold);
 			p.setAlignment(Element.ALIGN_RIGHT);
-			p.add(new Phrase(consulta.getDiagnositco(), font));
+			p.add(new Phrase(consulta.getDiagnostico(), font));
 			p.setSpacingBefore(20);
 			document.add(p);
 			agregarMedicamentos(document, consulta);
@@ -150,7 +150,7 @@ public class PdfExporterImpl implements IPdfExporter {
 		fechaN.setTime(fechaNacimiento);
 		Calendar now = Calendar.getInstance();
 		long edadEnDias = (now.getTimeInMillis() - fechaN.getTimeInMillis()) / 1000 / 60 / 60 / 24;
-		return Double.valueOf(edadEnDias / 365.25d).intValue();
+		return (int)(edadEnDias / 365.25d);
 	}
 	
 }
