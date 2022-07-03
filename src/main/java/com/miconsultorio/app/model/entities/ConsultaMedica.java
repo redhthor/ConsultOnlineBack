@@ -13,7 +13,7 @@ import com.miconsultorio.app.model.entities.bo.Medicacion;
 public class ConsultaMedica {
 	@Id
 	private String id;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	private Date fecha;
 	private Paciente paciente;
 	private String doctor;
