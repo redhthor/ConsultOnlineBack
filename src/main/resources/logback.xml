@@ -21,7 +21,7 @@
         </filter>
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<fileNamePattern>logs/archived/${ERROR_FILE}.%d{yyyy-MM-dd}.%i.log
+			<fileNamePattern>/consultOnline/logs/archived/${ERROR_FILE}.%d{yyyy-MM-dd}.%i.log
 			</fileNamePattern>
 			<!-- each archived file, size max 10MB -->
 			<maxFileSize>10MB</maxFileSize>
@@ -41,7 +41,7 @@
 		<file>${DEBUG_FILE}</file>
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<fileNamePattern>logs/archived/${DEBUG_FILE}.%d{yyyy-MM-dd}.%i.log
+			<fileNamePattern>/consultOnline/logs/archived/${DEBUG_FILE}.%d{yyyy-MM-dd}.%i.log
 			</fileNamePattern>
 			<!-- each archived file, size max 10MB -->
 			<maxFileSize>10MB</maxFileSize>
