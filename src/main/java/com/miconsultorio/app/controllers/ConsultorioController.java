@@ -5,10 +5,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -17,11 +19,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.miconsultorio.app.excepciones.InternalException;
 import com.miconsultorio.app.model.entities.ConsultaMedica;
 import com.miconsultorio.app.model.entities.Paciente;
 import com.miconsultorio.app.model.entities.vo.ConsultaMedicaVO;
 import com.miconsultorio.app.model.entities.vo.PacienteVO;
+import com.miconsultorio.app.model.requestbody.RequestHistorialConsultas;
 import com.miconsultorio.app.model.services.IConsultasService;
 import com.miconsultorio.app.model.services.impl.PacienteServiceImpl;
 
@@ -34,6 +37,8 @@ public class ConsultorioController {
 	private IConsultasService consultaService;
 	@Autowired
 	private PacienteServiceImpl pacienteService;
+	private static final Integer PAGE_SIZE = 30;
+	private static final String ERROR = "error";
 	
 	private static final Logger logger = LoggerFactory.getLogger(ConsultorioController.class);
 	
@@ -47,7 +52,7 @@ public class ConsultorioController {
 					err -> errors.add("El campo " + err.getField() + " " + err.getDefaultMessage())
 			);
 			resp.put("errors", errors);
-			resp.put("error", "Solicitud no válida");
+			resp.put(ERROR, "Solicitud no válida");
 			return new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
 		}
 		if(consulta.getPaciente() != null 
@@ -86,7 +91,7 @@ public class ConsultorioController {
 		logger.info("Buscando consulta con id: {}",id);
 		Map<String, Object> resp = new LinkedHashMap<>();
 		if(id == null || id.isBlank()) {
-			resp.put("error", "El id de la consulta solicitada no es válido");
+			resp.put(ERROR, "El id de la consulta solicitada no es válido");
 			return new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
 		}
 		ConsultaMedica consulta = null;
@@ -107,5 +112,32 @@ public class ConsultorioController {
 	public Mono<Paciente> findPaciente(@RequestBody String email) {
 		logger.info("Buscando paciente {}",email);
 		return pacienteService.buscarPacientePorEmail(email);
+	}
+	
+	@Secured("ROLE_USER") 
+	@PostMapping("/historialConsultas")
+	public ResponseEntity<Object> historialConsultas(@RequestBody @Valid RequestHistorialConsultas req, BindingResult result) {
+		Map<String, Object> response = new LinkedHashMap<>();
+		logger.info("Buscando historial de consultas");
+		if(result.hasErrors()) {
+			List<String> errors = new LinkedList<>();
+			result.getFieldErrors().forEach(err -> errors.add("El campo " + err.getField() + " " + err.getDefaultMessage()));
+			logger.info("Solicitud no válida");
+			response.put(ERROR, "Solicitud no válida");
+			response.put("errors", errors);
+			return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+		}
+		Page<ConsultaMedica> resultado = null;
+		try {
+			Pageable page = PageRequest.of(req.getPagina()-1, PAGE_SIZE);
+			resultado = consultaService.buscarHistorialDeConsultas(req, page);
+			logger.info("Información encontrada");
+		} catch(InternalException ex) {
+			logger.error("Ocurrió una excepcion: {}, datos: {}",ex.getMessage(), req);
+			response.put(ERROR, "Ocurrió un error, intentalo más tarde");
+			response.put("mensaje", "Ocurrió un error, intentalo más tarde");
+			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(resultado, HttpStatus.OK);
 	}
 }
