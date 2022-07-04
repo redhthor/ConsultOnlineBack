@@ -41,9 +41,10 @@ public class AgendaController {
 	public Flux<Cita> getAgendaByDate(@RequestBody RequestAgendaByDate req) {
 		String usuario = SecurityContextHolder.getContext().getAuthentication().getName();
 		if(!usuario.equals(req.getIdUsuario())) {
-			logger.info("El usuario que solicita no pertence al usuario autenticado, {}, {}", usuario, req.getIdUsuario());
+			logger.error("El usuario que solicita no pertence al usuario autenticado, {}, {}", usuario, req.getIdUsuario());
 			return Flux.just();
 		}
+		logger.info("Buscando datos por fecha: {}", req.getFecha());
 		return agendaService.obtenerCitasPorFechaInicio(req.getFecha(), usuario);
 	}
 	

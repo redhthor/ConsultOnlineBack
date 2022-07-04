@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+	<property name="ERROR_FILE" value="/consultOnline/logs/ConsultOnline_ERROR.log" />
+	<property name="DEBUG_FILE" value="/consultOnline/logs/ConsultOnline_DEBUG.log" />
+
+	<appender name="CONSOLE"
+		class="ch.qos.logback.core.ConsoleAppender" level="debug">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>
+				%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
+			</Pattern>
+		</layout>
+	</appender>
+
+	<appender name="FILE_ERROR"
+		class="ch.qos.logback.core.rolling.RollingFileAppender" level="error" additivity="false">	
+		<file>${ERROR_FILE}</file>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>logs/archived/${ERROR_FILE}.%d{yyyy-MM-dd}.%i.log
+			</fileNamePattern>
+			<!-- each archived file, size max 10MB -->
+			<maxFileSize>10MB</maxFileSize>
+			<!-- total size of all archive files, if total size > 20GB, it will delete 
+				old archived file -->
+			<totalSizeCap>2GB</totalSizeCap>
+			<!-- 60 days to keep -->
+			<maxHistory>60</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d %p %c{1.} [%t] %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE_DEBUG" debug="true" level="debug"
+		class="ch.qos.logback.core.rolling.RollingFileAppender" >	
+		<file>${DEBUG_FILE}</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>logs/archived/${DEBUG_FILE}.%d{yyyy-MM-dd}.%i.log
+			</fileNamePattern>
+			<!-- each archived file, size max 10MB -->
+			<maxFileSize>10MB</maxFileSize>
+			<!-- total size of all archive files, if total size > 20GB, it will delete 
+				old archived file -->
+			<totalSizeCap>20GB</totalSizeCap>
+			<!-- 60 days to keep -->
+			<maxHistory>60</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d %p %c{1.} %m%n</pattern>
+		</encoder>
+	</appender>
+	
+	<logger name="org.mongodb.driver" level="ERROR" />
+	<logger name="org.apache.catalina" level="ERROR" />
+	<logger name="org.springframework.security" level="ERROR" />
+	<logger name="org.springframework.boot" level="ERROR" />
+	<logger name="org.springframework.data" level="ERROR" />
+	
+	<root level="info">
+		<appender-ref ref="FILE_ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE_DEBUG" level="debug" />
+	</root>
+
+</configuration>
+

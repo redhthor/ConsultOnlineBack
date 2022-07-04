@@ -30,7 +30,6 @@ public class AgendaServiceImpl implements IAgendaService {
 	
 	@Override
 	public Flux<Cita> obtenerCitasPorFechaInicio(Date fecha, String doctor) {
-		logger.info("Fecha recibida: {}", fecha);
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
 		SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		String fechaFinString = sdf1.format(fecha) + " 23:59:59";

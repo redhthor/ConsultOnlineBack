@@ -43,3 +43,6 @@ build/
 *.zip
 *.tar.gz
 *.rar
+
+### LOGS ###
+/logs

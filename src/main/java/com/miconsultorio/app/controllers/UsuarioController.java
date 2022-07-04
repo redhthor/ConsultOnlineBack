@@ -43,6 +43,7 @@ public class UsuarioController {
 	
 	private Logger logger = LoggerFactory.getLogger(UsuarioController.class);
 	private static final String ERROR = "error";
+	private static final String MENSAJE = "mensaje";
 	
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/usuarios")
@@ -96,7 +97,7 @@ public class UsuarioController {
 			logger.info("Acceso denegado 2, {}", usuario);
 			logger.info("Solicitud de actualización de usuario no válida {}", usuario.getId());
 			response.put(ERROR, "Solicitud no válida");
-			response.put("mensaje", "Información no válida");
+			response.put(MENSAJE, "Información no válida");
 			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 		}
 		Usuario u = service.findByCorreo(userLogged).block();
@@ -112,7 +113,7 @@ public class UsuarioController {
 		u.setFechaNacimiento(usuario.getFechaNacimiento());
 		Mono<Usuario> newUser = service.save(u);
 		response.put("user", newUser.block());
-		response.put("mensaje", "Se guardó correctamente la información");
+		response.put(MENSAJE, "Se guardó correctamente la información");
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	
@@ -135,18 +136,18 @@ public class UsuarioController {
 		SecurityContext context = SecurityContextHolder.getContext();
 		if(!context.getAuthentication().isAuthenticated() || !context.getAuthentication().getName().equals(datos.getUser())) {
 			resp.put(ERROR, "Acceso denegado, no puedes actualizar la contraseña");
-			resp.put("mensaje", "No tienes permiso para actualizar la contraseña");
+			resp.put(MENSAJE, "No tienes permiso para actualizar la contraseña");
 			return new ResponseEntity<>(resp,HttpStatus.FORBIDDEN);
 		}
 		Usuario user = this.service.findByCorreo(datos.getUser()).block();
 		if(user == null) {
 			resp.put(ERROR, "No fue posible actualizar la contraseña");
-			resp.put("mensaje", "No se encontró el usuario solicitado");
+			resp.put(MENSAJE, "No se encontró el usuario solicitado");
 			return new ResponseEntity<>(resp,HttpStatus.FORBIDDEN);
 		}
 		user.setPassword(encoder.encode(datos.getPassword()));
-		user = service.save(user).block();
-		resp.put("mensaje", "Se actualizó correctamente la contraseña");
+		service.save(user).subscribe(u -> logger.info("Se actualizo la contraseña del usuario"));
+		resp.put(MENSAJE, "Se actualizó correctamente la contraseña");
 		return new ResponseEntity<>(resp,HttpStatus.OK);
 	}
 	
