@@ -89,6 +89,14 @@ public class ConsultaServiceImpl implements IConsultasService {
 				logger.info("Agregando nombre del paciente");
 				query.addCriteria(Criteria.where("paciente.nombre").regex(p.getNombre()));
 			}
+			if(p.getApellido1() != null && !p.getApellido1().isBlank()) {
+				logger.info("Agregando apellido1 del paciente");
+				query.addCriteria(Criteria.where("paciente.apellido1").regex(p.getApellido1()));
+			}
+			if(p.getApellido2() != null && !p.getApellido2().isBlank()) {
+				logger.info("Agregando apellido2 del paciente");
+				query.addCriteria(Criteria.where("paciente.apellido2").regex(p.getApellido2()));
+			}
 		}
 		List<ConsultaMedica> list = mongoTemplate.find(query, ConsultaMedica.class);
 		logger.info("Se obtiene resultado de la consulta");

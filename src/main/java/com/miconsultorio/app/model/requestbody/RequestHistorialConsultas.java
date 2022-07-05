@@ -16,6 +16,7 @@ public class RequestHistorialConsultas {
 	@NotNull
 	@Min(value = 1, message = "El valor mínimo debe ser 1")
 	private Integer pagina;
+	private Integer registrosPorPagina =  10;
 
 	public RequestHistorialConsultas() {
 		super();
@@ -53,10 +54,18 @@ public class RequestHistorialConsultas {
 		this.pagina = pagina;
 	}
 
+	public Integer getRegistrosPorPagina() {
+		return registrosPorPagina;
+	}
+
+	public void setRegistrosPorPagina(Integer registroPorPagina) {
+		this.registrosPorPagina = registroPorPagina;
+	}
+
 	@Override
 	public String toString() {
 		return "RequestHistorialConsultas [fecha=" + fecha + ", paciente=" + paciente + ", usuario=" + usuario
-				+ ", pagina=" + pagina + "]";
+				+ ", pagina=" + pagina + ", registroPorPagina=" + registrosPorPagina + "]";
 	}
 
 }

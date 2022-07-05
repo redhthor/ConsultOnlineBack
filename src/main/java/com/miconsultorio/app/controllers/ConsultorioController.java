@@ -4,7 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
 import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.miconsultorio.app.excepciones.InternalException;
 import com.miconsultorio.app.model.entities.ConsultaMedica;
 import com.miconsultorio.app.model.entities.Paciente;
@@ -37,8 +40,8 @@ public class ConsultorioController {
 	private IConsultasService consultaService;
 	@Autowired
 	private PacienteServiceImpl pacienteService;
-	private static final Integer PAGE_SIZE = 30;
 	private static final String ERROR = "error";
+	private static final String BAD_REQUEST = "Solicitud no válida";
 	
 	private static final Logger logger = LoggerFactory.getLogger(ConsultorioController.class);
 	
@@ -52,7 +55,7 @@ public class ConsultorioController {
 					err -> errors.add("El campo " + err.getField() + " " + err.getDefaultMessage())
 			);
 			resp.put("errors", errors);
-			resp.put(ERROR, "Solicitud no válida");
+			resp.put(ERROR, BAD_REQUEST);
 			return new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
 		}
 		if(consulta.getPaciente() != null 
@@ -122,14 +125,14 @@ public class ConsultorioController {
 		if(result.hasErrors()) {
 			List<String> errors = new LinkedList<>();
 			result.getFieldErrors().forEach(err -> errors.add("El campo " + err.getField() + " " + err.getDefaultMessage()));
-			logger.info("Solicitud no válida");
-			response.put(ERROR, "Solicitud no válida");
+			logger.info(BAD_REQUEST);
+			response.put(ERROR, BAD_REQUEST);
 			response.put("errors", errors);
 			return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
 		}
 		Page<ConsultaMedica> resultado = null;
 		try {
-			Pageable page = PageRequest.of(req.getPagina()-1, PAGE_SIZE);
+			Pageable page = PageRequest.of(req.getPagina()-1, req.getRegistrosPorPagina());
 			resultado = consultaService.buscarHistorialDeConsultas(req, page);
 			logger.info("Información encontrada");
 		} catch(InternalException ex) {
