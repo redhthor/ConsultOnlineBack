@@ -35,6 +35,7 @@ public class ConsultaMedicaVO {
 	private String diagnostico;
 	@Valid
 	private List<Medicacion> medicacion;
+	private String presion;
 	private List<String> sintomas;
 	private String observaciones;
 
@@ -55,6 +56,7 @@ public class ConsultaMedicaVO {
 		cm.setTemperatura(this.temperatura);
 		cm.setEstatura(estatura);
 		cm.setSintomas(sintomas);
+		cm.setPresion(presion);
 		return cm;
 	}
 
@@ -146,11 +148,22 @@ public class ConsultaMedicaVO {
 		this.estatura = estatura;
 	}
 
+	
+	public String getPresion() {
+		return presion;
+	}
+
+	public void setPresion(String presion) {
+		this.presion = presion;
+	}
+
 	@Override
 	public String toString() {
 		return "ConsultaMedicaVO [id=" + id + ", fecha=" + fecha + ", paciente=" + paciente + ", doctor=" + doctor
-				+ ", peso=" + peso + ", temperatura=" + temperatura + ", diagnostico=" + diagnostico + ", medicacion="
-				+ medicacion + ", observaciones=" + observaciones + "]";
+				+ ", peso=" + peso + ", estatura=" + estatura + ", temperatura=" + temperatura + ", diagnostico="
+				+ diagnostico + ", medicacion=" + medicacion + ", presion=" + presion + ", sintomas=" + sintomas
+				+ ", observaciones=" + observaciones + "]";
 	}
+
 
 }

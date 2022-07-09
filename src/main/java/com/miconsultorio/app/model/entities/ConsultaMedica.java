@@ -23,6 +23,7 @@ public class ConsultaMedica {
 	private String diagnostico;
 	private List<Medicacion> medicacion;
 	private String observaciones;
+	private String presion;
 	private List<String> sintomas;
 
 	public ConsultaMedica() {
@@ -117,11 +118,20 @@ public class ConsultaMedica {
 		this.estatura = estatura;
 	}
 
+	public String getPresion() {
+		return presion;
+	}
+
+	public void setPresion(String presion) {
+		this.presion = presion;
+	}
+
 	@Override
 	public String toString() {
 		return "ConsultaMedica [id=" + id + ", fecha=" + fecha + ", paciente=" + paciente + ", doctor=" + doctor
-				+ ", peso=" + peso + ", temperatura=" + temperatura + ", diagnostico=" + diagnostico + ", medicacion="
-				+ medicacion + ", observaciones=" + observaciones + "]";
+				+ ", peso=" + peso + ", estatura=" + estatura + ", temperatura=" + temperatura + ", diagnostico="
+				+ diagnostico + ", medicacion=" + medicacion + ", observaciones=" + observaciones + ", presion="
+				+ presion + ", sintomas=" + sintomas + "]";
 	}
 
 }
