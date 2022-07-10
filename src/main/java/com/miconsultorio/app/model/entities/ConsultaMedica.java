@@ -25,6 +25,7 @@ public class ConsultaMedica {
 	private String observaciones;
 	private String presion;
 	private List<String> sintomas;
+	private CategoriaEnfermedades categoria;
 
 	public ConsultaMedica() {
 		super();
@@ -124,6 +125,14 @@ public class ConsultaMedica {
 
 	public void setPresion(String presion) {
 		this.presion = presion;
+	}
+
+	public CategoriaEnfermedades getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(CategoriaEnfermedades categoria) {
+		this.categoria = categoria;
 	}
 
 	@Override

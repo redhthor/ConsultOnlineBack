@@ -78,7 +78,7 @@ public class PdfExporterImpl implements IPdfExporter {
 			table.setWidthPercentage(100f);
 			cell.setPhrase(new Phrase("Edad: " + getEdad(consulta.getPaciente().getFechaNacimiento())+ " años"));
 			table.addCell(cell);
-			cell.setPhrase(new Phrase("Estatura: "));
+			cell.setPhrase(new Phrase("Estatura: " + consulta.getEstatura() + " cm"));
 			table.addCell(cell);
 			cell.setPhrase(new Phrase("Peso: " + consulta.getPeso() + " Kg"));
 			table.addCell(cell);

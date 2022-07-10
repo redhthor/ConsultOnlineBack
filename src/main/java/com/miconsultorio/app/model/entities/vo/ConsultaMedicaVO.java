@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.miconsultorio.app.model.entities.CategoriaEnfermedades;
 import com.miconsultorio.app.model.entities.ConsultaMedica;
 import com.miconsultorio.app.model.entities.bo.Medicacion;
 
@@ -36,6 +37,7 @@ public class ConsultaMedicaVO {
 	@Valid
 	private List<Medicacion> medicacion;
 	private String presion;
+	private CategoriaEnfermedades categoria;
 	private List<String> sintomas;
 	private String observaciones;
 
@@ -57,6 +59,7 @@ public class ConsultaMedicaVO {
 		cm.setEstatura(estatura);
 		cm.setSintomas(sintomas);
 		cm.setPresion(presion);
+		cm.setCategoria(categoria);
 		return cm;
 	}
 
@@ -155,6 +158,14 @@ public class ConsultaMedicaVO {
 
 	public void setPresion(String presion) {
 		this.presion = presion;
+	}
+
+	public CategoriaEnfermedades getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(CategoriaEnfermedades categoria) {
+		this.categoria = categoria;
 	}
 
 	@Override
