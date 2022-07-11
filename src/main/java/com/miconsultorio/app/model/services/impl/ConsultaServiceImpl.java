@@ -81,19 +81,19 @@ public class ConsultaServiceImpl implements IConsultasService {
 		}
 		if(req.getPaciente() != null ) {
 			PacienteVO p = req.getPaciente();
-			if(p.getEmail() != null && !p.getEmail().isBlank()) {
+			if(p.getEmail() != null && !p.getEmail().isEmpty()) {
 				logger.info("Agregando correo del paciente");
 				query.addCriteria(Criteria.where("paciente.email").is(p.getEmail()));
 			}
-			if(p.getNombre() != null && !p.getNombre().isBlank()) {
+			if(p.getNombre() != null && !p.getNombre().isEmpty()) {
 				logger.info("Agregando nombre del paciente");
 				query.addCriteria(Criteria.where("paciente.nombre").regex(p.getNombre()));
 			}
-			if(p.getApellido1() != null && !p.getApellido1().isBlank()) {
+			if(p.getApellido1() != null && !p.getApellido1().isEmpty()) {
 				logger.info("Agregando apellido1 del paciente");
 				query.addCriteria(Criteria.where("paciente.apellido1").regex(p.getApellido1()));
 			}
-			if(p.getApellido2() != null && !p.getApellido2().isBlank()) {
+			if(p.getApellido2() != null && !p.getApellido2().isEmpty()) {
 				logger.info("Agregando apellido2 del paciente");
 				query.addCriteria(Criteria.where("paciente.apellido2").regex(p.getApellido2()));
 			}
