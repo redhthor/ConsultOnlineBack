@@ -13,9 +13,9 @@
 	<artifactId>mi-consultorio</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>mi-consultorio</name>
-	<description>Curso udemy reactor</description>
+	<description>Backend para sistema de ConsultOnline</description>
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
