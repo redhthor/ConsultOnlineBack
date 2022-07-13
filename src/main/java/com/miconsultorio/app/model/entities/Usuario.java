@@ -44,9 +44,9 @@ public class Usuario {
 	}
 
 	public String fullName() {
-		String fullName = titulo != null && !titulo.isBlank() ? titulo + " " : "";
+		String fullName = titulo != null && !titulo.isEmpty() ? titulo + " " : "";
 		fullName = fullName + this.nombre + " " + this.apellidoPaterno;
-		fullName = this.apellidoMaterno != null && !this.apellidoMaterno.isBlank() ? fullName + " " + this.apellidoMaterno : fullName; 
+		fullName = this.apellidoMaterno != null && !this.apellidoMaterno.isEmpty() ? fullName + " " + this.apellidoMaterno : fullName; 
 		return fullName;
 	}
 	

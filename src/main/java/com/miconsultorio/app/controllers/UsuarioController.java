@@ -63,7 +63,7 @@ public class UsuarioController {
 			response.put("errors", errors);
 			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 		}
-		if(usuario.getId() == null || usuario.getId().isBlank()) {
+		if(usuario.getId() == null || usuario.getId().isEmpty()) {
 			Usuario find = service.findByCorreo(usuario.getCorreo()).block();
 			if(find != null) {
 				response.put(ERROR, "Ya existe un usuario con el correo " + usuario.getCorreo() + " registrado");
@@ -90,10 +90,10 @@ public class UsuarioController {
 			response.put(ERROR, accessDenied);
 			return new ResponseEntity<>(response,HttpStatus.FORBIDDEN);
 		}		
-		if(usuario.getId() == null || usuario.getId().isBlank() 
+		if(usuario.getId() == null || usuario.getId().isEmpty() 
 				|| usuario.getFechaNacimiento() == null 
-				|| usuario.getNombre().isBlank() 
-				|| usuario.getApellidoPaterno().isBlank()) {
+				|| usuario.getNombre().isEmpty() 
+				|| usuario.getApellidoPaterno().isEmpty()) {
 			logger.info("Acceso denegado 2, {}", usuario);
 			logger.info("Solicitud de actualización de usuario no válida {}", usuario.getId());
 			response.put(ERROR, "Solicitud no válida");

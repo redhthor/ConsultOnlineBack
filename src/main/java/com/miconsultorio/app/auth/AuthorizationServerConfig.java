@@ -49,8 +49,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory().withClient("angularApp")
-		.secret(encoder.encode("123456"))
+		clients.inMemory().withClient("consultOnlineApp")
+		.secret(encoder.encode(JwtConfig.SECRET_KEY))
 		.scopes("read","write")
 		.authorizedGrantTypes("password","refresh_token")
 		.accessTokenValiditySeconds(3600*4)
@@ -60,8 +60,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Bean("accessTokenConverter")
 	public JwtAccessTokenConverter accessTokenConverter() {
 		JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-		jwtAccessTokenConverter.setSigningKey(JwtConfig.PRIVATE_KEY);
 		jwtAccessTokenConverter.setVerifierKey(JwtConfig.PUBLIC_KEY);
+		jwtAccessTokenConverter.setSigningKey(JwtConfig.PRIVATE_KEY);
 		return jwtAccessTokenConverter;
 	}
 	

@@ -26,8 +26,8 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers(HttpMethod.POST,"/api/usuario","/oauth/token").permitAll()
-			.anyRequest().authenticated()
-			.and().csrf().disable()
+			.anyRequest().permitAll()
+			.and()
 			.cors().configurationSource(corsConfigurationSource()).and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
@@ -36,7 +36,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowedOriginPatterns(Arrays.asList(GlobalConstants.URL_CORS));
-		config.setAllowedMethods(Arrays.asList("POST","GET","DELETE"));
+		config.setAllowedMethods(Arrays.asList("*"));
 		config.setAllowCredentials(true);
 		config.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

@@ -26,7 +26,7 @@ public class Paciente {
 	public String getFullName() {
 		String fullName = "";
 		fullName = this.nombre + " " + this.apellido1;
-		fullName = this.apellido2 != null && !this.apellido2.isBlank() ? fullName + " " + this.apellido2 : fullName;
+		fullName = this.apellido2 != null && !this.apellido2.isEmpty() ? fullName + " " + this.apellido2 : fullName;
 		return fullName;
 	}
 

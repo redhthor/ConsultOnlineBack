@@ -59,8 +59,8 @@ public class ConsultorioController {
 			return new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
 		}
 		if(consulta.getPaciente() != null 
-				&& (consulta.getPaciente().getId() == null || consulta.getPaciente().getId().isBlank()) 
-				&& (consulta.getPaciente().getEmail() != null && !consulta.getPaciente().getEmail().isBlank())) {
+				&& (consulta.getPaciente().getId() == null || consulta.getPaciente().getId().isEmpty()) 
+				&& (consulta.getPaciente().getEmail() != null && !consulta.getPaciente().getEmail().isEmpty())) {
 			Paciente p = pacienteService.buscarPacientePorEmail(consulta.getPaciente().getEmail()).block();
 			logger.info("Valor encontrado del paciente con email: {}", p);
 			if (p == null) {
@@ -74,7 +74,7 @@ public class ConsultorioController {
 				logger.info("El paciente ya se encuentra en la base de datos");
 				consulta.setPaciente(PacienteVO.fromEntity(p));
 			}
-		} else if(consulta.getPaciente() != null && consulta.getId() != null && !consulta.getId().isBlank()) {
+		} else if(consulta.getPaciente() != null && consulta.getId() != null && !consulta.getId().isEmpty()) {
 			// Updating allergies
 			Paciente p = this.pacienteService.buscarPacientePorEmail(consulta.getPaciente().getEmail()).block();
 			if(p != null) {
@@ -93,7 +93,7 @@ public class ConsultorioController {
 	public ResponseEntity<Object> buscarConsulta(@RequestBody String id) {
 		logger.info("Buscando consulta con id: {}",id);
 		Map<String, Object> resp = new LinkedHashMap<>();
-		if(id == null || id.isBlank()) {
+		if(id == null || id.isEmpty()) {
 			resp.put(ERROR, "El id de la consulta solicitada no es válido");
 			return new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
 		}
