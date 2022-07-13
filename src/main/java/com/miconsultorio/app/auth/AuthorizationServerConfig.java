@@ -49,8 +49,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory().withClient("angularApp")
-		.secret(encoder.encode(JwtConfig.PRIVATE_KEY))
+		clients.inMemory().withClient("consultOnlineApp")
+		.secret(encoder.encode(JwtConfig.SECRET_KEY))
 		.scopes("read","write")
 		.authorizedGrantTypes("password","refresh_token")
 		.accessTokenValiditySeconds(3600*4)
