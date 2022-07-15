@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.miconsultorio.app.model.dao.ICitaDao;
 import com.miconsultorio.app.model.entities.Cita;
@@ -24,6 +25,7 @@ public class AgendaServiceImpl implements IAgendaService {
 	private static final Logger logger = LoggerFactory.getLogger(AgendaServiceImpl.class);
 	
 	@Override
+	@Transactional(readOnly = false)
 	public Mono<Cita> guardarCita(Cita cita) {
 		return citaDao.save(cita);
 	}
