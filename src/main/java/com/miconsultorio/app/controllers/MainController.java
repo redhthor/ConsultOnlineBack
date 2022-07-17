@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 
 	@GetMapping({
+		"/login",
 		"/agenda",
 		"/welcome",
 		"/consulta",
 		"/consulta/*",
 		"/consultas/historial",
-		"/profile"
+		"/profile",
+		"/signUp"
 	})
 	public String redireccion() {
 		return "redirect:/templates/index.html";
