@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.miconsultorio.app.excepciones.NoEncontradoException;
 import com.miconsultorio.app.model.dao.ICitaDao;
 import com.miconsultorio.app.model.entities.Cita;
 import com.miconsultorio.app.model.services.IAgendaService;
@@ -45,5 +46,13 @@ public class AgendaServiceImpl implements IAgendaService {
 			logger.error("Ocurrió un error al convertir las fechas: {}", ex.getMessage());
 		}
 		return citaDao.buscarPorFechaInicioAndDoctor(fechaInicio, fechaFin, doctor);
+	}
+	
+	@Override
+	public void eliminarCita(String id) throws NoEncontradoException {
+		if(citaDao.findById(id).block() == null) {
+			throw new NoEncontradoException("No existe la cita a eliminar");
+		}
+		citaDao.deleteById(id);
 	}
 }

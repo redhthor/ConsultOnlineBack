@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.miconsultorio.app.excepciones.NoEncontradoException;
 import com.miconsultorio.app.model.entities.Cita;
 import com.miconsultorio.app.model.entities.vo.CitaVO;
 import com.miconsultorio.app.model.requestbody.RequestAgendaByDate;
@@ -72,4 +73,19 @@ public class AgendaController {
 		return new ResponseEntity<>(resp,HttpStatus.OK);
 	}
 	
+	
+	@Secured("ROLE_USER")
+	@PostMapping("/delete")
+	public ResponseEntity<Map<String, Object>> eliminarEvento(@RequestBody String id) {
+		Map<String, Object> response = new LinkedHashMap<>();
+		HttpStatus status = HttpStatus.OK;
+		try {
+			agendaService.eliminarCita(id);
+			response.put("mensaje", "Se eliminó correctamente el evento solicitado");
+		} catch(NoEncontradoException ex) {
+			response.put("error", ex.getMessage());
+			status = HttpStatus.BAD_REQUEST;
+		}
+		return new ResponseEntity<>(response, status);
+	}
 }

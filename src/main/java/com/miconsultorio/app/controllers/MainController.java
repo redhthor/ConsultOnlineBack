@@ -8,7 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("")
 public class MainController {
 
-	@GetMapping("consultonline/**")
+	@GetMapping({
+		"/agenda",
+		"/welcome",
+		"/consulta",
+		"/consulta/*",
+		"/consultas/historial",
+		"/profile"
+	})
 	public String redireccion() {
 		return "redirect:/templates/index.html";
 	}
